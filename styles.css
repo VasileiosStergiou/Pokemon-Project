@@ -1,0 +1,87 @@
+/* styles.css */
+body {
+    background: linear-gradient(to right, #3a3737, #0a0a0a);
+    color:azure;
+    margin: 0;
+    min-width: 100vw;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.container {
+    text-align: center;
+}
+
+.form-control{
+    background-color: rgb(241, 143, 143);
+}
+
+#submit-button{
+    background-color: rgb(14, 97, 221);
+    color:azure;
+}
+#poketable{
+    width: 95%;
+    border-collapse:collapse;
+}
+
+.container {
+    max-width: 100%;
+}
+
+/* Wrapper around the table to enable top scrollbar */
+.table-scroll {
+    overflow-x: auto;
+    overflow-y: auto; /* Only horizontal scrolling */
+    padding-bottom: 1px; /* To avoid vertical scrollbar on some browsers */
+}
+
+/* Table styling */
+table {
+    width: 10%;
+    border-collapse: collapse;
+    font-size: smaller;
+    position: absolute;
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid #4e4130;
+    text-align: left;
+    color: rgb(235, 226, 217);
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* Optional: Add sticky header for better navigation in large tables */
+thead th {
+    top: 0;
+    background-color: #aa380b;
+    z-index: 1;
+}
+
+#pkmon-img{
+    width: 20%;
+    height:20%;
+}
+
+.pokemon-info {
+    width: 70%;
+    background: rgb(167, 162, 167);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(99, 55, 150, 0.2);
+    margin-left: 21%;
+    text-align: center;
+}
+.pokemon-info img {
+    width: 70px;
+    height: 70px;
+}
+.stats {
+    margin: 10px 0;
+}
+.evolution {
+    margin-top: 10px;
+    font-size: 14px;
+}
