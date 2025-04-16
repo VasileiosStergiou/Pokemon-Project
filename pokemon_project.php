@@ -25,52 +25,76 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Search any Pokemon here</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
+            <form class="form-inline ml-auto" method="GET" action="">
+                <ul class="navbar-nav">
                     <li class="nav-item">
-                        <input type="text" name="pokemon-id" class="form-control" placeholder="Number" aria-label="Name">
+                        <input type="text" name="pokemon-id" class="form-control mr-sm-2" placeholder="Number" aria-label="Number">
                     </li>
-                </li>
-                <li class="nav-item">
-                    <input type="text" name="pokemon-name" class="form-control" placeholder="Name" aria-label="Name">
-                </li>
-                <form method="GET" action=""></form>
                     <li class="nav-item">
-                        <select name ="generation" class="form-control" aria-label="Generation">
-                            <?php
-                                getGenerations();
-                                #echo $_GET["pokemon-id"];
-                                #echo $_GET["pokemon-name"];
-                            ?>
+                        <input type="text" name="pokemon-name" class="form-control mr-sm-2" placeholder="Name" aria-label="Name">
+                    </li>
+                    <li class="nav-item">
+                        <select name="generation" class="form-control mr-sm-2" aria-label="Generation">
+                            <?php getGenerations(); ?>
                         </select>
                     </li>
-                    <button type="submit" id= "submit-button">Submit</button>
-                </form>
-            </ul>
+                    <li class="nav-item">
+                        <button type="submit" id="submit-button" name="submit" class="btn btn-outline-light">Submit</button>
+                    </li>
+                </ul>
+            </form>
         </div>
     </nav>
 
     <script>
-        // Select all elements with the class 'my-class'
-        const elements = document.querySelectorAll('.form-control');
+        document.addEventListener("DOMContentLoaded", function () {
+            const fields = [
+                document.querySelector('input[name="pokemon-id"]'),
+                document.querySelector('input[name="pokemon-name"]'),
+                document.querySelector('select[name="generation"]')
+            ];
 
-        // Variable to keep track of the currently selected element
-        let selectedElement = null;
-        console.log(elements.length);
-        elements.forEach((element) => console.log(element.tagName+':'+element.value));
-        
+            fields.forEach(activeField => {
+                activeField.addEventListener("click", function () {
+                    const isDisabled = activeField.classList.contains("active-field");
+
+                    // Enable all fields first
+                    fields.forEach(f => {
+                        f.disabled = false;
+                        f.classList.remove("active-field");
+                    });
+
+                    // If field wasn't already active, disable the others
+                    if (!isDisabled) {
+                        fields.forEach(f => {
+                            if (f !== activeField) f.disabled = true;
+                        });
+                        activeField.classList.add("active-field");
+                    }
+                });
+            });
+        });
     </script>
 
     <?php
         #print_r($pokemon_data);
-        #$req = getPokemonByID(643,$pokemon_data);
-        #$req = getPokemonByGeneration(2,$pokemon_data);
-        $req = getPokemonByName('OL',$pokemon_data);
-        createPokemonCard($req);
+        if (isset($_GET['submit'])) {
+            // Grab form data
+            $pokemonId = $_GET['pokemon-id'] ?? '';
+            $pokemonName = $_GET['pokemon-name'] ?? '';
+            $generation = $_GET['generation'] ?? '';
+            
+            $req = get_data_from_field($pokemon_data, $pokemonId,
+                                $pokemonName,$generation);
+            
+            createPokemonCard($req);
+        }
     ?>
 </body>
 </html>

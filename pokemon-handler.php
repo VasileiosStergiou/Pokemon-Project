@@ -38,6 +38,33 @@
         }
     }
 
+    function get_data_from_field($pokemon_data, $pokemonId,$pokemonName,$generation){
+        if (!empty($pokemonId)) {
+            return getPokemonByID($pokemonId,$pokemon_data);
+        }
+        if (!empty($pokemonName)) {
+            return getPokemonByName($pokemonName,$pokemon_data);
+        }
+
+        if (!empty($generation)) {
+            return getPokemonByGeneration($generation,$pokemon_data);
+        }
+    }
+
+    function find_common_elements($a,$b){
+        //print_r($a);
+        $elements = [];
+        foreach($a as $elementA){
+            foreach($b as $elementB){
+                if ($elementA == $elementB){
+                    $elements[] = $elementA;
+                }
+            }
+        }
+        return $elements;
+    }
+
+
     function getPokemonByID($id,$pokemon_data) {
         foreach ($pokemon_data as $row) {
             if ($row['pkdx no'] == $id){
